@@ -6,23 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Multi Step Progress</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
   </head>
   <body>
     <div class="container">
-      <div class="steps">
-        <span class="circle active">1</span>
-        <span class="circle">2</span>
-        <span class="circle">3</span>
-        <span class="circle">4</span>
-        <div class="progress-bar">
-          <span class="indicator"></span>
-        </div>
-      </div>
-      <div class="buttons">
-        <button id="prev" disabled>Prev</button>
-        <button id="next">Next</button>
-      </div>
-    </div>
+    <div class="step"><i class="icon"></i></div>
+    <div class="step"><i class="icon"></i></div>
+    <div class="step"><i class="icon"></i></div>
+    <div class="step"><i class="icon"></i></div>
+    <div class="step"><i class="icon"></i></div>
+</div>
+<div class="buttons">
+    <button class="button">←</button>
+    <button class="button active">→</button>
+</div>
+<script>
+const steps = document.querySelectorAll('.step');
+const buttons = document.querySelectorAll('.button');
+let currentStep = 0;
+
+function updateSteps() {
+    steps.forEach((step, index) => {
+        step.classList.remove('active', 'completed');
+        if (index === currentStep) {
+            step.classList.add('active');
+            step.querySelector('i').textContent = '✓';
+        } else if (index < currentStep) {
+            step.classList.add('completed');
+            step.querySelector('i').textContent = '✓';
+        } else {
+            step.querySelector('i').textContent = 'X';
+        }
+    });
+}
+
+buttons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        if (index === 0) {
+            if (currentStep > 0) {
+                currentStep--;
+            }
+        } else {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+            }
+        }
+        updateSteps();
+    });
+});
+
+updateSteps();
+</script>
   </body>
 </html
